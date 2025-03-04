@@ -12,7 +12,14 @@ class AuthController extends Controller
     {
         return view('login');
     }
-
+    public function showLogout()
+    {
+        return view('login');
+    }
+    public function logout()
+    {
+        return view('login');
+    }
     // Proses login
     public function login(Request $request)
     {
@@ -31,7 +38,7 @@ class AuthController extends Controller
         if ($request->email === $credentials['email'] && $request->password === $credentials['password']) {
             Session::put('is_logged_in', true);
             Session::flash('success', 'Login berhasil! Selamat datang di Dashboard.');
-            return redirect('/login');
+            return redirect('/');
         }
     
         // Jika salah, kembali ke halaman login dengan error
@@ -48,26 +55,44 @@ class AuthController extends Controller
     }
 
     // Logout
-    public function logout()
-    {
-        Session::forget('is_logged_in');
-        return redirect('/login');
-    }
+    private $anggota = [
+        ['nama' => 'Fadil', 'nim' => '123456', 'role' => 'Ketua Kelas', 'email' => 'fadil@example.com'],
+        ['nama' => 'Rizky', 'nim' => '123457', 'role' => 'Wakil Ketua', 'email' => 'rizky@example.com'],
+        ['nama' => 'Aisyah', 'nim' => '123458', 'role' => 'Sekretaris', 'email' => 'aisyah@example.com'],
+        ['nama' => 'Dian', 'nim' => '123459', 'role' => 'Bendahara', 'email' => 'dian@example.com']
+    ];
+
     public function index()
     {
-        return view('dashboard');
+        return view('home');
     }
 
     public function daftarAnggota()
     {
-        // Data anggota kelas disimpan dalam array tanpa database
-        $anggota = [
-            ['nama' => 'Fadil', 'nim' => '123456', 'role' => 'Ketua Kelas'],
-            ['nama' => 'Rizky', 'nim' => '123457', 'role' => 'Wakil Ketua'],
-            ['nama' => 'Aisyah', 'nim' => '123458', 'role' => 'Sekretaris'],
-            ['nama' => 'Dian', 'nim' => '123459', 'role' => 'Bendahara']
-        ];
-
-        return view('daftar_anggota', compact('anggota'));
+        return view('mahasiswa', ['anggota' => $this->anggota]);
     }
+
+    public function detailAnggota($nim)
+    {
+        $anggota = collect($this->anggota)->firstWhere('nim', $nim);
+
+        if (!$anggota) {
+            abort(404);
+        }
+
+        return view('detail_anggota', ['anggota' => $anggota]);
+    }
+   
+
+    // public function index2()
+    // {
+    //     $filePath = storage_path('app/public/kelas.json');
+        
+    //     if (!file_exists($filePath)) {
+    //         return response()->json(['message' => 'File tidak ditemukan'], 404);
+    //     }
+
+    //     $data = json_decode(file_get_contents($filePath), true);
+    //     return response()->json($data);
+    // }
 }

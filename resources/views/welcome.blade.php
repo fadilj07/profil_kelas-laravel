@@ -22,6 +22,7 @@
                 Selamat datang di website kami! Temukan berbagai informasi dan inspirasi
                 untuk masa depan yang lebih cerah..
             </p>
+            <a href="#">
             <div
               class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
             >
@@ -51,8 +52,8 @@
                   </svg>
                 </div>
               </button>
-
             </div>
+            </a>
           </div>
 
           <div class="w-full md:w-2/5 md:pl-12">
