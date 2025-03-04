@@ -53,4 +53,21 @@ class AuthController extends Controller
         Session::forget('is_logged_in');
         return redirect('/login');
     }
+    public function index()
+    {
+        return view('dashboard');
+    }
+
+    public function daftarAnggota()
+    {
+        // Data anggota kelas disimpan dalam array tanpa database
+        $anggota = [
+            ['nama' => 'Fadil', 'nim' => '123456', 'role' => 'Ketua Kelas'],
+            ['nama' => 'Rizky', 'nim' => '123457', 'role' => 'Wakil Ketua'],
+            ['nama' => 'Aisyah', 'nim' => '123458', 'role' => 'Sekretaris'],
+            ['nama' => 'Dian', 'nim' => '123459', 'role' => 'Bendahara']
+        ];
+
+        return view('daftar_anggota', compact('anggota'));
+    }
 }
